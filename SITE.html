@@ -1,147 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Pentecost Preparatory School</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            scroll-behavior: smooth;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        header {
-            background-color: #004080;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        header h1 { margin: 0; font-size: 36px; }
-        header p { margin: 5px 0 0 0; font-size: 18px; }
-
-        nav {
-            background-color: #0066cc;
-            display: flex;
-            justify-content: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        nav a {
-            color: white;
-            padding: 15px 25px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover { background-color: #004080; }
-
-        section {
-            padding: 60px 20px;
-            max-width: 900px;
-            margin: auto;
-        }
-        section h2 { color: #004080; margin-top: 0; }
-        p { line-height: 1.6; }
-
-        form input, form button, form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            box-sizing: border-box;
-        }
-        form button {
-            background-color: #004080;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        form button:hover { background-color: #0066cc; }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #004080;
-            color: white;
-        }
-
-        /* News cards */
-        .news-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-        }
-        .news-card h3 { margin-top: 0; }
-    </style>
+<meta charset="UTF-8">
+<title>Pentecost Preparatory School</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; scroll-behavior: smooth; }
+  header { padding: 40px 20px; text-align:center; background-size: cover; color:white; }
+  nav { background:#0066cc; display:flex; justify-content:center; position:sticky; top:0; }
+  nav a { color:white; padding:15px 25px; text-decoration:none; font-weight:bold; }
+  nav a:hover { background:#004080; }
+  section { padding:60px 20px; max-width:900px; margin:auto; background-size: cover; color:white; }
+  h2 { color:#004080; margin-top:0; }
+  form input, form button { width:100%; padding:10px; margin:8px 0; box-sizing:border-box; }
+  form button { background:#004080; color:white; border:none; cursor:pointer; font-size:16px; }
+  form button:hover { background:#0066cc; }
+  footer { text-align:center; padding:20px; background:#004080; color:white; }
+</style>
 </head>
 <body>
 
-<header>
-    <h1>Pentecost Preparatory School</h1>
-    <p>Admissions Open – Join Our Family Today!</p>
+<!-- HEADER -->
+<header id="header" style="background-image: url('images/default-home-bg.jpg');">
+  <img id="logo" src="images/default-logo.png" alt="School Logo" style="height:80px;">
+  <h1 id="header-title">Pentecost Preparatory School</h1>
+  <p id="header-subtitle">Admissions Open – Join Our Family Today!</p>
 </header>
 
+<!-- NAV -->
 <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#news">News</a>
-    <a href="#admissions">Admissions</a>
-    <a href="#contact">Contact</a>
+  <a href="#home">Home</a>
+  <a href="#about">About</a>
+  <a href="#news">News</a>
+  <a href="#admissions">Admissions</a>
+  <a href="#contact">Contact</a>
 </nav>
 
-<section id="home">
-    <h2>Welcome to Pentecost Preparatory School</h2>
-    <p>Providing quality education in a nurturing environment. We focus on academic excellence, discipline, and character development to prepare students for a bright future.</p>
+<!-- HOME -->
+<section id="home" style="background-image: url('images/default-home-bg.jpg');">
+  <h2 id="home-title">Welcome to Pentecost Preparatory School</h2>
+  <p id="home-body">Providing quality education in a nurturing environment. We focus on academic excellence, discipline, and character development.</p>
 </section>
 
+<!-- ABOUT -->
 <section id="about">
-    <h2>About Us</h2>
-    <p>Pentecost Preparatory School has been serving the community for years, creating a safe and inspiring environment for young learners. Our dedicated teachers guide students to excel both academically and socially.</p>
+  <h2 id="about-title">About Us</h2>
+  <p id="about-body">Pentecost Preparatory School has been serving the community for years, creating a safe and inspiring environment for young learners.</p>
 </section>
 
+<!-- NEWS -->
 <section id="news">
-    <h2>Latest News</h2>
-    <div class="news-card">
-        <h3>School Reopens After Holidays</h3>
-        <p>The school will reopen on April 15th. Students are expected to follow all health protocols.</p>
-    </div>
-    <div class="news-card">
-        <h3>Science Fair 2026</h3>
-        <p>Our annual Science Fair will be held on May 20th. Students are encouraged to participate with innovative projects.</p>
-    </div>
+  <h2>Latest News</h2>
+  <div id="news-items"></div>
 </section>
 
+<!-- ADMISSIONS -->
 <section id="admissions">
-    <h2>Admissions Form</h2>
-    <form action="https://formspree.io/f/xaqlkjrn" method="POST">
-        <label>Student Name:</label><br>
-        <input type="text" name="student_name" required><br>
-
-        <label>Parent Name:</label><br>
-        <input type="text" name="parent_name" required><br>
-
-        <label>Phone Number:</label><br>
-        <input type="tel" name="phone" required><br>
-
-        <label>Class Applying For:</label><br>
-        <input type="text" name="class" required><br>
-
-        <button type="submit">Apply Now</button>
-    </form>
+  <h2 id="admissions-title">Admissions Form</h2>
+  <p id="admissions-instructions">Fill out the form below to apply.</p>
+  <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <input type="text" name="student_name" placeholder="Student Name" required>
+    <input type="text" name="parent_name" placeholder="Parent Name" required>
+    <input type="tel" name="phone" placeholder="Phone Number" required>
+    <input type="text" name="class" placeholder="Class Applying For" required>
+    <button type="submit">Apply Now</button>
+  </form>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
-    <h2>Contact Us</h2>
-    <p>Phone: +233 24 000 0000</p>
-    <p>Address: Madina, Accra, Ghana</p>
+  <h2>Contact Us</h2>
+  <p id="contact-phone">Phone: +233 24 000 0000</p>
+  <p id="contact-address">Address: Madina, Accra, Ghana</p>
 </section>
 
+<!-- FOOTER -->
 <footer>
-    &copy; 2026 Pentecost Preparatory School
+  &copy; 2026 Pentecost Preparatory School
 </footer>
 
+<!-- CMS JS -->
+<script>
+const username = "YOUR_GITHUB_USERNAME"; // change to your GitHub username
+
+// Header
+fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/header.md`)
+  .then(r => r.text()).then(md => {
+    const title = md.match(/title:\s*(.*)/)[1];
+    const subtitle = md.match(/subtitle:\s*(.*)/)[1];
+    const logo = md.match(/logo:\s*(.*)/)[1];
+    const bg = md.match(/background:\s*(.*)/)[1];
+    document.getElementById('header-title').innerText = title;
+    document.getElementById('header-subtitle').innerText = subtitle;
+    document.getElementById('logo').src = 'images/' + logo;
+    document.getElementById('header').style.backgroundImage = 'url(images/' + bg + ')';
+  });
+
+// About
+fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/about.md`)
+  .then(r => r.text()).then(md => {
+    const title = md.match(/title:\s*(.*)/)[1];
+    const body = md.match(/body:\s*([\s\S]*)/)[1];
+    const bg = md.match(/background:\s*(.*)/)[1];
+    document.getElementById('about-title').innerText = title;
+    document.getElementById('about-body').innerText = body;
+    document.getElementById('about').style.backgroundImage = 'url(images/' + bg + ')';
+  });
+
+// News
+fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/news.md`)
+  .then(r => r.text()).then(md => {
+    const newsDiv = document.getElementById('news-items');
+    const items = md.split('- title:').slice(1);
+    items.forEach(item => {
+      const title = item.match(/(.*)/)[1].trim();
+      const desc = item.match(/description:\s*(.*)/)[1];
+      const img = item.match(/image:\s*(.*)/)[1];
+      const newsItem = document.createElement('div');
+      newsItem.innerHTML = `
+        <h3>${title}</h3>
+        <p>${desc}</p>
+        <img src="images/${img}" alt="${title}" style="max-width:100%; margin-bottom:20px;">
+      `;
+      newsDiv.appendChild(newsItem);
+    });
+  });
+
+// Contact
+fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/contact.md`)
+  .then(r => r.text()).then(md => {
+    const phone = md.match(/phone:\s*(.*)/)[1];
+    const addr = md.match(/address:\s*(.*)/)[1];
+    document.getElementById('contact-phone').innerText = 'Phone: ' + phone;
+    document.getElementById('contact-address').innerText = 'Address: ' + addr;
+  });
+
+// Admissions
+fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/admissions.md`)
+  .then(r => r.text()).then(md => {
+    const title = md.match(/form_header:\s*(.*)/)[1];
+    const instr = md.match(/instructions:\s*(.*)/)[1];
+    document.getElementById('admissions-title').innerText = title;
+    document.getElementById('admissions-instructions').innerText = instr;
+  });
+</script>
 </body>
 </html>
