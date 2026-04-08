@@ -18,12 +18,11 @@
 </style>
 </head>
 <body>
-
 <!-- HEADER -->
 <header id="header" style="background-image: url('images/default-home-bg.jpg');">
-  <img id="logo" src="images/default-logo.png" alt="School Logo" style="height:80px;">
-  <h1 id="header-title">Pentecost Preparatory School</h1>
-  <p id="header-subtitle">Admissions Open – Join Our Family Today!</p>
+  <img id="logo" src="" alt="School Logo" style="height:80px;">
+  <h1 id="header-title"></h1>
+  <p id="header-subtitle"></p>
 </header>
 
 <!-- NAV -->
@@ -37,26 +36,26 @@
 
 <!-- HOME -->
 <section id="home" style="background-image: url('images/default-home-bg.jpg');">
-  <h2 id="home-title">Welcome to Pentecost Preparatory School</h2>
-  <p id="home-body">Providing quality education in a nurturing environment. We focus on academic excellence, discipline, and character development.</p>
+  <h2 id="home-title"></h2>
+  <p id="home-body"></p>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
-  <h2 id="about-title">About Us</h2>
-  <p id="about-body">Pentecost Preparatory School has been serving the community for years, creating a safe and inspiring environment for young learners.</p>
+  <h2 id="about-title"></h2>
+  <p id="about-body"></p>
 </section>
 
 <!-- NEWS -->
 <section id="news">
-  <h2>Latest News</h2>
+  <h2 id="news-title"></h2>
   <div id="news-items"></div>
 </section>
 
 <!-- ADMISSIONS -->
 <section id="admissions">
-  <h2 id="admissions-title">Admissions Form</h2>
-  <p id="admissions-instructions">Fill out the form below to apply.</p>
+  <h2 id="admissions-title"></h2>
+  <p id="admissions-instructions"></p>
   <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
     <input type="text" name="student_name" placeholder="Student Name" required>
     <input type="text" name="parent_name" placeholder="Parent Name" required>
@@ -68,10 +67,71 @@
 
 <!-- CONTACT -->
 <section id="contact">
-  <h2>Contact Us</h2>
-  <p id="contact-phone">Phone: +233 24 000 0000</p>
-  <p id="contact-address">Address: Madina, Accra, Ghana</p>
+  <h2 id="contact-title"></h2>
+  <p id="contact-phone"></p>
+  <p id="contact-address"></p>
 </section>
+
+<!-- JS to load content dynamically from CMS -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  function parseFrontMatter(md) {
+    const fm = md.match(/---\n([\s\S]*?)\n---/)[1];
+    const lines = fm.split('\n');
+    const data = {};
+    lines.forEach(line => {
+      const [key, ...rest] = line.split(':');
+      data[key.trim()] = rest.join(':').trim();
+    });
+    return data;
+  }
+
+  async function loadContent(file) {
+    const res = await fetch('/content/' + file);
+    const md = await res.text();
+    return parseFrontMatter(md);
+  }
+
+  // Header
+  loadContent('header.md').then(data => {
+    document.getElementById('header-title').textContent = data.title;
+    document.getElementById('header-subtitle').textContent = data.subtitle;
+    document.getElementById('logo').src = data.logo;
+    if(data.background) document.getElementById('header').style.backgroundImage = `url('${data.background}')`;
+  });
+
+  // Home
+  loadContent('home.md').then(data => {
+    document.getElementById('home-title').textContent = data.title;
+    document.getElementById('home-body').textContent = data.text;
+    if(data.background) document.getElementById('home').style.backgroundImage = `url('${data.background}')`;
+  });
+
+  // About
+  loadContent('about.md').then(data => {
+    document.getElementById('about-title').textContent = data.title;
+    document.getElementById('about-body').textContent = data.text;
+  });
+
+  // News
+  loadContent('news.md').then(data => {
+    document.getElementById('news-title').textContent = data.title;
+    document.getElementById('news-items').textContent = data.text;
+  });
+
+  // Admissions
+  loadContent('admissions.md').then(data => {
+    document.getElementById('admissions-title').textContent = data.title;
+    document.getElementById('admissions-instructions').textContent = data.text;
+  });
+
+  // Contact
+  loadContent('contact.md').then(data => {
+    document.getElementById('contact-title').textContent = data.title;
+    document.getElementById('contact-phone').textContent = data.phone;
+    document.getElementById('contact-address').textContent = data.address;
+  });
+</script></section>
 
 <!-- FOOTER -->
 <footer>
