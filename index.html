@@ -144,5 +144,58 @@ fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/cont
   });
 </script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  // Helper to parse front matter
+  function parseFrontMatter(md) {
+    const fm = md.match(/---\n([\s\S]*?)\n---/)[1];
+    const lines = fm.split('\n');
+    const data = {};
+    lines.forEach(line => {
+      const [key, ...rest] = line.split(':');
+      data[key.trim()] = rest.join(':').trim();
+    });
+    return data;
+  }
+
+  // Load a markdown file and return front matter
+  async function loadContent(file) {
+    const res = await fetch('/content/' + file);
+    const md = await res.text();
+    return parseFrontMatter(md);
+  }
+
+  // Header
+  loadContent('header.md').then(data => {
+    document.getElementById('site-title').textContent = data.title;
+    document.getElementById('site-subtitle').textContent = data.subtitle;
+    document.getElementById('site-logo').src = data.logo;
+  });
+
+  // About
+  loadContent('about.md').then(data => {
+    document.getElementById('about-title').textContent = data.title;
+    document.getElementById('about-text').textContent = data.text;
+  });
+
+  // Admissions
+  loadContent('admissions.md').then(data => {
+    document.getElementById('admissions-title').textContent = data.title;
+    document.getElementById('admissions-text').textContent = data.text;
+  });
+
+  // Contact
+  loadContent('contact.md').then(data => {
+    document.getElementById('contact-title').textContent = data.title;
+    document.getElementById('contact-email').textContent = data.email;
+    document.getElementById('contact-phone').textContent = data.phone;
+  });
+
+  // News
+  loadContent('news.md').then(data => {
+    document.getElementById('news-title').textContent = data.title;
+    document.getElementById('news-text').textContent = data.text;
+  });
+</script>
 </body>
 </html>
