@@ -8,6 +8,8 @@
     font-family: Arial, sans-serif; 
     margin: 0; 
     scroll-behavior: smooth; 
+    background: #f9f9f9; /* light background for readability */
+    color: #222; /* default text color */
   }
 
   /* HEADER */
@@ -28,6 +30,7 @@
     justify-content: center; 
     position: sticky; 
     top: 0; 
+    z-index: 100;
   }
   nav a { 
     color: white; 
@@ -45,9 +48,10 @@
     max-width: 900px; 
     margin: auto; 
     background-size: cover; 
-    color: white; /* you can change this per section if needed */ 
+    background-position: center;
+    color: #222; /* dark text for readability on any background */
   }
-  h2 { 
+  section h2 { 
     color: #004080; 
     margin-top: 0; 
   }
@@ -58,6 +62,7 @@
     padding: 10px; 
     margin: 8px 0; 
     box-sizing: border-box; 
+    color: #222;
   }
   form button { 
     background: #004080; 
