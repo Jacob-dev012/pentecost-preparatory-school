@@ -2,8 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "images"        # where uploaded images are stored
-public_folder: "/images"      # path used in HTML
+media_folder: "images"
+public_folder: "/images"
 
 collections:
   - name: "pages"
@@ -17,8 +17,8 @@ collections:
         fields:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Subtitle", name: "subtitle", widget: "string"}
-          - {label: "Logo", name: "logo", widget: "image"}
-          - {label: "Background Image", name: "background", widget: "image"}
+          - {label: "Logo", name: "logo", widget: "image", required: false}
+          - {label: "Background Image", name: "background", widget: "image", required: false}
 
       # About section
       - file: "content/about.md"
@@ -27,18 +27,20 @@ collections:
         fields:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Content", name: "body", widget: "markdown"}
-          - {label: "Background Image", name: "background", widget: "image"}
+          - {label: "Background Image", name: "background", widget: "image", required: false}
 
       # News section
       - file: "content/news.md"
         label: "News Section"
         name: "news"
         fields:
-          - {label: "News Items", name: "items", widget: "list", fields: [
-              {label: "Title", name: "title", widget: "string"},
-              {label: "Description", name: "description", widget: "text"},
-              {label: "Image", name: "image", widget: "image"}
-            ]}
+          - label: "News Items"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Image", name: "image", widget: "image", required: false}
 
       # Contact section
       - file: "content/contact.md"
@@ -48,7 +50,7 @@ collections:
           - {label: "Phone", name: "phone", widget: "string"}
           - {label: "Address", name: "address", widget: "string"}
 
-      # Admissions section (optional extra)
+      # Admissions section
       - file: "content/admissions.md"
         label: "Admissions Section"
         name: "admissions"
