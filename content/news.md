@@ -1,1 +1,7 @@
-
+---
+items:
+  - title: ADMISSIONS ARE OUT NOW
+    description: PENTECOST PREPRATORY SCHOOL HAS RELEASED THEIR ONLINE FORMS FOR
+      ADMISSIONS INTO THE INSTITUTION
+    image: /images/screenshot-2026-04-08-165049.png
+---
