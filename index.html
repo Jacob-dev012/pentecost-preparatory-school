@@ -141,188 +141,105 @@
 
 <!-- JS to load content dynamically from CMS -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
 <script>
-  function parseFrontMatter(md) {
-    const fm = md.match(/---\n([\s\S]*?)\n---/)[1];
-    const lines = fm.split('\n');
-    const data = {};
-    lines.forEach(line => {
-      const [key, ...rest] = line.split(':');
-      data[key.trim()] = rest.join(':').trim();
-    });
-    return data;
-  }
+function parseFrontMatter(md) {
+  const match = md.match(/---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+  
+  const lines = match[1].split('\n');
+  const data = {};
 
-  async function loadContent(file) {
-    const res = await fetch('/content/' + file);
-    const md = await res.text();
-    return parseFrontMatter(md);
-  }
+  lines.forEach(line => {
+    const [key, ...rest] = line.split(':');
+    if (!key) return;
+    data[key.trim()] = rest.join(':').trim();
+  });
 
-  // Header
-  loadContent('header.md').then(data => {
-    document.getElementById('header-title').textContent = data.title;
-    document.getElementById('header-subtitle').textContent = data.subtitle;
+  return data;
+}
+
+async function loadContent(file) {
+  const res = await fetch('/content/' + file);
+  const md = await res.text();
+  return parseFrontMatter(md);
+}
+
+/* ================= HEADER ================= */
+loadContent('header.md').then(data => {
+  document.getElementById('header-title').textContent = data.title || "";
+  document.getElementById('header-subtitle').textContent = data.subtitle || "";
+
+  if (data.logo) {
     document.getElementById('logo').src = data.logo;
-    if(data.background) document.getElementById('header').style.backgroundImage = `url('${data.background}')`;
-  });
+  }
 
-  // Home
-  loadContent('home.md').then(data => {
-    document.getElementById('home-title').textContent = data.title;
-    document.getElementById('home-body').textContent = data.text;
-    if(data.background) document.getElementById('home').style.backgroundImage = `url('${data.background}')`;
-  });
+  if (data.background) {
+    document.getElementById('header').style.backgroundImage = `url('${data.background}')`;
+  }
+});
 
-  // About
-  loadContent('about.md').then(data => {
-    document.getElementById('about-title').textContent = data.title;
-    document.getElementById('about-body').textContent = data.text;
-  });
+/* ================= HOME ================= */
+loadContent('home.md').then(data => {
+  document.getElementById('home-title').textContent = data.title || "";
+  document.getElementById('home-body').textContent = data.text || "";
 
-  // News
-  loadContent('news.md').then(data => {
-    document.getElementById('news-title').textContent = data.title;
-    document.getElementById('news-items').textContent = data.text;
-  });
+  if (data.background) {
+    document.getElementById('home').style.backgroundImage = `url('${data.background}')`;
+  }
+});
 
-  // Admissions
-  loadContent('admissions.md').then(data => {
-    document.getElementById('admissions-title').textContent = data.title;
-    document.getElementById('admissions-instructions').textContent = data.text;
-  });
+/* ================= ABOUT ================= */
+loadContent('about.md').then(data => {
+  document.getElementById('about-title').textContent = data.title || "";
+  document.getElementById('about-body').textContent = data.text || "";
+});
 
-  // Contact
-  loadContent('contact.md').then(data => {
-    document.getElementById('contact-title').textContent = data.title;
-    document.getElementById('contact-phone').textContent = data.phone;
-    document.getElementById('contact-address').textContent = data.address;
-  });
-</script></section>
+/* ================= NEWS ================= */
+fetch('/content/news.md')
+  .then(res => res.text())
+  .then(md => {
+    const container = document.getElementById('news-items');
+    container.innerHTML = "";
 
-<!-- FOOTER -->
-<footer>
-  &copy; 2026 Pentecost Preparatory School
-</footer>
-
-<!-- CMS JS -->
-<script>
-const username = "Jacob-dev012"; // change to your GitHub username
-
-// Header
-fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/header.md`)
-  .then(r => r.text()).then(md => {
-    const title = md.match(/title:\s*(.*)/)[1];
-    const subtitle = md.match(/subtitle:\s*(.*)/)[1];
-    const logo = md.match(/logo:\s*(.*)/)[1];
-    const bg = md.match(/background:\s*(.*)/)[1];
-    document.getElementById('header-title').innerText = title;
-    document.getElementById('header-subtitle').innerText = subtitle;
-    document.getElementById('logo').src = 'images/' + logo;
-    document.getElementById('header').style.backgroundImage = 'url(images/' + bg + ')';
-  });
-
-// About
-fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/about.md`)
-  .then(r => r.text()).then(md => {
-    const title = md.match(/title:\s*(.*)/)[1];
-    const body = md.match(/body:\s*([\s\S]*)/)[1];
-    const bg = md.match(/background:\s*(.*)/)[1];
-    document.getElementById('about-title').innerText = title;
-    document.getElementById('about-body').innerText = body;
-    document.getElementById('about').style.backgroundImage = 'url(images/' + bg + ')';
-  });
-
-// News
-fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/news.md`)
-  .then(r => r.text()).then(md => {
-    const newsDiv = document.getElementById('news-items');
     const items = md.split('- title:').slice(1);
+
     items.forEach(item => {
-      const title = item.match(/(.*)/)[1].trim();
-      const desc = item.match(/description:\s*(.*)/)[1];
-      const img = item.match(/image:\s*(.*)/)[1];
-      const newsItem = document.createElement('div');
-      newsItem.innerHTML = `
+      const titleMatch = item.match(/^(.*)/);
+      const descMatch = item.match(/description:\s*(.*)/);
+      const imgMatch = item.match(/image:\s*(.*)/);
+
+      const title = titleMatch ? titleMatch[1].trim() : "";
+      const desc = descMatch ? descMatch[1].trim() : "";
+      const img = imgMatch ? imgMatch[1].trim() : "";
+
+      const div = document.createElement('div');
+
+      div.innerHTML = `
         <h3>${title}</h3>
         <p>${desc}</p>
-        <img src="images/${img}" alt="${title}" style="max-width:100%; margin-bottom:20px;">
+        ${img ? `<img src="${img}" style="max-width:100%; margin-bottom:20px;">` : ""}
       `;
-      newsDiv.appendChild(newsItem);
+
+      container.appendChild(div);
     });
   });
 
-// Contact
-fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/contact.md`)
-  .then(r => r.text()).then(md => {
-    const phone = md.match(/phone:\s*(.*)/)[1];
-    const addr = md.match(/address:\s*(.*)/)[1];
-    document.getElementById('contact-phone').innerText = 'Phone: ' + phone;
-    document.getElementById('contact-address').innerText = 'Address: ' + addr;
-  });
+/* ================= ADMISSIONS ================= */
+loadContent('admissions.md').then(data => {
+  document.getElementById('admissions-title').textContent = data.title || "";
+  document.getElementById('admissions-instructions').textContent = data.text || "";
+});
 
-// Admissions
-fetch(`https://raw.githubusercontent.com/${username}/pentecost-website/main/content/admissions.md`)
-  .then(r => r.text()).then(md => {
-    const title = md.match(/form_header:\s*(.*)/)[1];
-    const instr = md.match(/instructions:\s*(.*)/)[1];
-    document.getElementById('admissions-title').innerText = title;
-    document.getElementById('admissions-instructions').innerText = instr;
-  });
+/* ================= CONTACT ================= */
+loadContent('contact.md').then(data => {
+  document.getElementById('contact-title').textContent = data.title || "";
+  document.getElementById('contact-phone').textContent = data.phone || "";
+  document.getElementById('contact-address').textContent = data.address || "";
+});
 </script>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-  // Helper to parse front matter
-  function parseFrontMatter(md) {
-    const fm = md.match(/---\n([\s\S]*?)\n---/)[1];
-    const lines = fm.split('\n');
-    const data = {};
-    lines.forEach(line => {
-      const [key, ...rest] = line.split(':');
-      data[key.trim()] = rest.join(':').trim();
-    });
-    return data;
-  }
 
-  // Load a markdown file and return front matter
-  async function loadContent(file) {
-    const res = await fetch('/content/' + file);
-    const md = await res.text();
-    return parseFrontMatter(md);
-  }
-
-  // Header
-  loadContent('header.md').then(data => {
-    document.getElementById('site-title').textContent = data.title;
-    document.getElementById('site-subtitle').textContent = data.subtitle;
-    document.getElementById('site-logo').src = data.logo;
-  });
-
-  // About
-  loadContent('about.md').then(data => {
-    document.getElementById('about-title').textContent = data.title;
-    document.getElementById('about-text').textContent = data.text;
-  });
-
-  // Admissions
-  loadContent('admissions.md').then(data => {
-    document.getElementById('admissions-title').textContent = data.title;
-    document.getElementById('admissions-text').textContent = data.text;
-  });
-
-  // Contact
-  loadContent('contact.md').then(data => {
-    document.getElementById('contact-title').textContent = data.title;
-    document.getElementById('contact-email').textContent = data.email;
-    document.getElementById('contact-phone').textContent = data.phone;
-  });
-
-  // News
-  loadContent('news.md').then(data => {
-    document.getElementById('news-title').textContent = data.title;
-    document.getElementById('news-text').textContent = data.text;
-  });
-</script>
+<!-- Netlify Identity -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </body>
 </html>
