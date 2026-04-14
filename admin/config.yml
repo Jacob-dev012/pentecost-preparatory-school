@@ -1,12 +1,11 @@
 backend:
-  name: github
-  repo: Jacob-dev012/pentecost-preparatory-school
+  name: git-gateway
   branch: main
 
 media_folder: "images"
 public_folder: "/images"
 
-publish_mode: editorial_workflow
+publish_mode: simple
 
 collections:
   - name: "pages"
